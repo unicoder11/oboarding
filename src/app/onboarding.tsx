@@ -225,7 +225,7 @@ export default function OnboardingPage() {
               Próximo
             </Button>
           ) : (
-            <Button type="submit" disabled={isSubmitting}>
+            <Button onClick={handleSubmit} type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Enviando...' : 'Enviar'}
             </Button>
           )}
