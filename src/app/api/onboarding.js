@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Pool } from 'pg'
 import formidable from 'formidable'
-import fs from 'fs'
+
 
 // Configuración de la conexión a PostgreSQL
 const pool = new Pool({
