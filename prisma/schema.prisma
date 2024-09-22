@@ -15,8 +15,9 @@ datasource db {
 }
 model Onboarding {
   id            Int      @id @default(autoincrement())
-  name          String
+  nome          String
   cpf           String
-  uploadedPhoto Bytes
-  cameraPhoto   Bytes
+  documentoFoto String
+  selfie        String
+  createdAt     DateTime @default(now())
 }

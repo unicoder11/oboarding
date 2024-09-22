@@ -13,7 +13,7 @@ interface FormData {
   nome: string;
   cpf: string;
   documentoFoto: File | null;
-  selfie: string | null;
+  selfie: string | null ;
 }
 
 export default function OnboardingPage() {
@@ -55,13 +55,15 @@ export default function OnboardingPage() {
     }
   }
 
+
+
   const takePicture = () => {
     const video = videoRef.current
     const canvas = canvasRef.current
     if (video && canvas) {
       const context = canvas.getContext('2d')
       if (context) {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+        context.drawImage(video, 0, 0, canvas.width, canvas.height) 
         const imageDataUrl = canvas.toDataURL('image/jpeg')
         setFormData({ ...formData, selfie: imageDataUrl })
 
@@ -210,7 +212,7 @@ export default function OnboardingPage() {
         </CardContent>
         <CardFooter className="flex justify-between">
           {step > 0 && (
-            <Button type="button" variant="outline" onClick={prevStep}>
+            <Button type="button" onClick={prevStep}>
               Voltar
             </Button>
           )}
