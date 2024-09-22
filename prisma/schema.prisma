@@ -5,13 +5,14 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
-
 datasource db {
   provider = "postgresql"
   url      = "postgresql://onboarding_owner:X4R3xtaWQoVg@ep-twilight-sound-a5c6g6mi.us-east-2.aws.neon.tech/onboarding?sslmode=require"
-  // url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+// url      = env("DATABASE_URL")
 }
 model Onboarding {
   id            Int      @id @default(autoincrement())
