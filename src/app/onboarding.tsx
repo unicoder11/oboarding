@@ -10,14 +10,11 @@ import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 
-const [isSubmitting, setIsSubmitting] = useState(false)
-const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null)
-
 interface FormData {
   nome: string;
   cpf: string;
   documentoFoto: File | null;
-  selfie: string | null ;
+  selfie: string | null;
 }
 
 export default function OnboardingPage() {
@@ -28,6 +25,8 @@ export default function OnboardingPage() {
     documentoFoto: null,
     selfie: null
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -59,8 +58,6 @@ export default function OnboardingPage() {
     }
   }
 
-
-
   const takePicture = () => {
     const video = videoRef.current
     const canvas = canvasRef.current
@@ -71,7 +68,7 @@ export default function OnboardingPage() {
         const imageDataUrl = canvas.toDataURL('image/jpeg')
         setFormData({ ...formData, selfie: imageDataUrl })
 
-        // Pare o stream de vídeo
+        // Stop the video stream
         const stream = video.srcObject as MediaStream
         const tracks = stream.getTracks()
         tracks.forEach(track => track.stop())
@@ -86,18 +83,16 @@ export default function OnboardingPage() {
     switch (step) {
       case 0:
         return (
-          <>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="nome">Nome Completo</Label>
-                <Input id="nome" name="nome" value={formData.nome} onChange={handleInputChange} placeholder="Digite seu nome completo" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="cpf">CPF</Label>
-                <Input id="cpf" name="cpf" value={formData.cpf} onChange={handleInputChange} placeholder="Digite seu CPF" />
-              </div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="nome">Nome Completo</Label>
+              <Input id="nome" name="nome" value={formData.nome} onChange={handleInputChange} placeholder="Digite seu nome completo" />
             </div>
-          </>
+            <div className="space-y-2">
+              <Label htmlFor="cpf">CPF</Label>
+              <Input id="cpf" name="cpf" value={formData.cpf} onChange={handleInputChange} placeholder="Digite seu CPF" />
+            </div>
+          </div>
         )
       case 1:
         return (
@@ -187,25 +182,26 @@ export default function OnboardingPage() {
       })
   
       if (response.ok) {
-        console.log('Dados enviados com sucesso!')
-        // Redirecionar o mostrar un mensaje de éxito
+        const data = await response.json()
+        setSubmitStatus('success')
+        console.log('Dados enviados com sucesso:', data)
       } else {
-        console.error('Falha ao enviar dados')
+        const errorData = await response.json()
+        setSubmitStatus('error')
+        console.error('Falha ao enviar dados:', errorData.error)
       }
     } catch (error) {
+      setSubmitStatus('error')
       console.error('Erro ao enviar dados:', error)
     } finally {
-    setIsSubmitting(false)
+      setIsSubmitting(false)
+    }
   }
-  }
-  
 
   return (
     <div className="container mx-auto p-4">
-      <div className="container mx-auto p-4">
       <div className="flex justify-center mb-8">
         <LogoSvg />
-        </div>
       </div>
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
@@ -233,26 +229,24 @@ export default function OnboardingPage() {
               {isSubmitting ? 'Enviando...' : 'Enviar'}
             </Button>
           )}
-          {submitStatus === 'success' && (
-  <Alert className="mt-4">
-    
-    <AlertTitle>Sucesso!</AlertTitle>
-    <AlertDescription>
-      Seu formulário foi enviado com sucesso. Entraremos em contato em breve.
-    </AlertDescription>
-  </Alert>
-)}
-{submitStatus === 'error' && (
-  <Alert variant="destructive" className="mt-4">
-
-    <AlertTitle>Erro</AlertTitle>
-    <AlertDescription>
-      Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.
-    </AlertDescription>
-  </Alert>
-)}
         </CardFooter>
       </Card>
+      {submitStatus === 'success' && (
+        <Alert className="mt-4">
+          <AlertTitle>Sucesso!</AlertTitle>
+          <AlertDescription>
+            Seu formulário foi enviado com sucesso. Entraremos em contato em breve.
+          </AlertDescription>
+        </Alert>
+      )}
+      {submitStatus === 'error' && (
+        <Alert variant="destructive" className="mt-4">
+          <AlertTitle>Erro</AlertTitle>
+          <AlertDescription>
+            Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.
+          </AlertDescription>
+        </Alert>
+      )}
     </div>
   )
 }
