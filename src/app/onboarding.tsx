@@ -8,6 +8,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+
+const [isSubmitting, setIsSubmitting] = useState(false)
+const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null)
 
 interface FormData {
   nome: string;
@@ -163,6 +167,8 @@ export default function OnboardingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus(null)
   
     const formDataToSend = new FormData()
     formDataToSend.append('nome', formData.nome)
@@ -188,7 +194,9 @@ export default function OnboardingPage() {
       }
     } catch (error) {
       console.error('Erro ao enviar dados:', error)
-    }
+    } finally {
+    setIsSubmitting(false)
+  }
   }
   
 
@@ -221,10 +229,28 @@ export default function OnboardingPage() {
               Próximo
             </Button>
           ) : (
-            <Button type="submit">
-              Enviar
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Enviando...' : 'Enviar'}
             </Button>
           )}
+          {submitStatus === 'success' && (
+  <Alert className="mt-4">
+    
+    <AlertTitle>Sucesso!</AlertTitle>
+    <AlertDescription>
+      Seu formulário foi enviado com sucesso. Entraremos em contato em breve.
+    </AlertDescription>
+  </Alert>
+)}
+{submitStatus === 'error' && (
+  <Alert variant="destructive" className="mt-4">
+
+    <AlertTitle>Erro</AlertTitle>
+    <AlertDescription>
+      Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.
+    </AlertDescription>
+  </Alert>
+)}
         </CardFooter>
       </Card>
     </div>
