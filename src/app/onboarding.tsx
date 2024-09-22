@@ -147,7 +147,7 @@ export default function OnboardingPage() {
             <h3 className="text-lg font-semibold">Revise seus dados</h3>
             <p><strong>Nome:</strong> {formData.nome}</p>
             <p><strong>CPF:</strong> {formData.cpf}</p>
-            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto : 'Não enviado'}</p>
+            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto. : 'Não enviado'}</p>
             {formData.selfie && (
               <div>
                 <p><strong>Selfie:</strong></p>
@@ -182,8 +182,8 @@ export default function OnboardingPage() {
         data: {
           nome: formData.nome,
           cpf: formData.cpf,
-          documentoFoto: formData.documentoFoto,
-          selfie: formData.selfie?
+          documentoFoto: formData.documentoFoto || "",
+          selfie: formData.selfie || "",
         }
       })
       // const response = await fetch('/api/onboarding', {
