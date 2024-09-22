@@ -109,7 +109,7 @@ export default function OnboardingPage() {
                 <Input id="documento" name="documento" type="file" className="hidden" onChange={handleFileUpload} />
               </label>
             </div>
-            {formData.documentoFoto && <p className="text-sm text-green-600">Arquivo selecionado: {formData.documentoFoto.name}</p>}
+            {formData.documentoFoto && <p className="text-sm text-green-600">Arquivo selecionado: {formData.documentoFoto}</p>}
           </div>
         )
       case 2:
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
             <h3 className="text-lg font-semibold">Revise seus dados</h3>
             <p><strong>Nome:</strong> {formData.nome}</p>
             <p><strong>CPF:</strong> {formData.cpf}</p>
-            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto. : 'Não enviado'}</p>
+            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto : 'Não enviado'}</p>
             {formData.selfie && (
               <div>
                 <p><strong>Selfie:</strong></p>
