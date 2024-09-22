@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
-import Image from 'next/image'
 import LogoSvg from '@/assets/logo_blox.svg'
 
 interface FormData {
