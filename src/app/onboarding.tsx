@@ -9,11 +9,12 @@ import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import { PrismaClient } from '@prisma/client';
 
 interface FormData {
   nome: string;
   cpf: string;
-  documentoFoto: File | null;
+  documentoFoto: string | null;
   selfie: string | null;
 }
 
@@ -43,7 +44,7 @@ export default function OnboardingPage() {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, documentoFoto: e.target.files[0] })
+      setFormData({ ...formData, documentoFoto: e.target.files[0].name })
     }
   }
 
@@ -146,7 +147,7 @@ export default function OnboardingPage() {
             <h3 className="text-lg font-semibold">Revise seus dados</h3>
             <p><strong>Nome:</strong> {formData.nome}</p>
             <p><strong>CPF:</strong> {formData.cpf}</p>
-            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto.name : 'Não enviado'}</p>
+            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto : 'Não enviado'}</p>
             {formData.selfie && (
               <div>
                 <p><strong>Selfie:</strong></p>
@@ -176,19 +177,26 @@ export default function OnboardingPage() {
     }
   
     try {
-      const response = await fetch('/api/onboarding', {
-        method: 'POST',
-        body: formDataToSend,
+      const prisma = new PrismaClient()
+      const response = await prisma.onboarding.create({
+        data: {
+          nome: formData.nome,
+          cpf: formData.cpf,
+          documentoFoto: formData.documentoFoto,
+          selfie: formData.selfie?
+        }
       })
+      // const response = await fetch('/api/onboarding', {
+      //   method: 'POST',
+      //   body: formDataToSend,
+      // })
   
-      if (response.ok) {
-        const data = await response.json()
+      if (response) {
         setSubmitStatus('success')
-        console.log('Dados enviados com sucesso:', data)
+        console.log('Dados enviados com sucesso:')
       } else {
-        const errorData = await response.json()
         setSubmitStatus('error')
-        console.error('Falha ao enviar dados:', errorData.error)
+        console.error('Falha ao enviar dados:')
       }
     } catch (error) {
       setSubmitStatus('error')
