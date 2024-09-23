@@ -118,7 +118,7 @@ export default function OnboardingPage() {
                 <Input id="documento" name="documento" type="file" className="hidden" onChange={handleFileUpload} />
               </label>
             </div>
-            {formData.documentoFoto && <p className="text-sm text-green-600">Arquivo selecionado: {formData.documentoFoto}</p>}
+            {formData.documentoFoto && <p className="text-sm text-green-600">Arquivo selecionado: {formData.documentoFoto.slice(0, 20)}...</p>}
           </div>
         )
       case 2:
@@ -239,7 +239,7 @@ export default function OnboardingPage() {
               Próximo
             </Button>
           ) : (
-            <Button onClick={handleSubmit} type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Enviando...' : 'Enviar'}
             </Button>
           )}
