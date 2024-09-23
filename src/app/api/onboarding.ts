@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios'
+
 // import { PrismaClient } from '@prisma/client';
 
 // import { Pool, neonConfig } from '@neondatabase/serverless';
@@ -14,6 +16,12 @@ import { PrismaClient } from '@prisma/client';
 // const pool = new Pool({ connectionString });
 // const adapter = new PrismaNeon(pool);
 const prisma = new PrismaClient();
+
+export async function save(formDataToSend: FormData) {
+  const save = axios.post('/api/onboarding', formDataToSend)
+  return save
+}
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {

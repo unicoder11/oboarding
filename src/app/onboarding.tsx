@@ -1,4 +1,4 @@
-
+'use client'
 
 import React, { useState, useRef } from 'react'
 import { Button } from "@/components/ui/button"
@@ -9,7 +9,7 @@ import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import axios from 'axios'
+import { save } from '@/app/api/onboarding'
 
 interface FormData {
   nome: string;
@@ -178,8 +178,7 @@ export default function OnboardingPage() {
   
     try {
 
-      const resp =  axios.post('/api/onboarding', formDataToSend)
-      console.log(resp)
+      const resp =  save(formDataToSend)
       
       
       // const response = await fetch('/api/onboarding', {
