@@ -10,7 +10,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = "postgresql://onboarding_owner:X4R3xtaWQoVg@ep-twilight-sound-a5c6g6mi.us-east-2.aws.neon.tech/onboarding?sslmode=require"
-  // directUrl = env("DIRECT_URL")
+  directUrl = "postgresql://onboarding_owner:X4R3xtaWQoVg@ep-twilight-sound-a5c6g6mi-pooler.us-east-2.aws.neon.tech/onboarding?sslmode=require"
 // url      = env("DATABASE_URL")
 }
 model Onboarding {
