@@ -206,7 +206,7 @@ export default function OnboardingPage() {
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-center mb-8">
-        <LogoSvg />
+        <LogoSvg width={150} height={150}/>
       </div>
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
