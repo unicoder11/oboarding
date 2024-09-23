@@ -29,6 +29,15 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const { nome, cpf, documentoFoto, selfie } = req.body;
+    const onboarding = await prisma.onboarding.create({
+        data: {
+          nome,
+          cpf,
+          documentoFoto: documentoFoto || null,
+          selfie: selfie || null,
+        },
+      });
+      return res.status(201).json({ message: 'Dados salvos com sucesso!', onboarding });
   } catch (error) {
     console.error('Erro ao salvar dados:', error);
     return res.status(500).json({ error: 'Erro interno do servidor ao salvar dados.' });
