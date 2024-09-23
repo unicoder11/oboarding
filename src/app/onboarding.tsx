@@ -9,7 +9,7 @@ import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { save } from '@/app/api/route'
+
 
 interface FormData {
   nome: string;
@@ -178,16 +178,16 @@ export default function OnboardingPage() {
   
     try {
 
-      const resp =  save(formDataToSend)
+    
       
       
-      // const response = await fetch('/api/onboarding', {
-      //   method: 'POST',
-      //   body: formDataToSend,
-      // })
+      const response = await fetch('/api/route', {
+        method: 'POST',
+        body: formDataToSend,
+      })
   
-      if (resp) {
-        const data = await (await resp).data
+      if (response) {
+        const data = await response.json()
         setSubmitStatus('success')
         console.log('Dados enviados com sucesso:', data)
       } else {
