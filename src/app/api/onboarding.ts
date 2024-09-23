@@ -1,19 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 // import { PrismaClient } from '@prisma/client';
 
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { PrismaNeon } from '@prisma/adapter-neon';
+// import { Pool, neonConfig } from '@neondatabase/serverless';
+// import { PrismaNeon } from '@prisma/adapter-neon';
 import { PrismaClient } from '@prisma/client';
-import dotenv from 'dotenv';
-import ws from 'ws';
+// import dotenv from 'dotenv';
+// import ws from 'ws';
 
-dotenv.config();
-neonConfig.webSocketConstructor = ws;
-const connectionString = `${process.env.DATABASE_URL}`
+// dotenv.config();
+// neonConfig.webSocketConstructor = ws;
+// const connectionString = `${process.env.DATABASE_URL}`
 
-const pool = new Pool({ connectionString });
-const adapter = new PrismaNeon(pool);
-const prisma = new PrismaClient({ adapter });
+// const pool = new Pool({ connectionString });
+// const adapter = new PrismaNeon(pool);
+const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
