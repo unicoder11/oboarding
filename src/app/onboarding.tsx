@@ -14,7 +14,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 interface FormData {
   nome: string;
   cpf: string;
-  documentoFoto: File | null;
+  documentoFoto: string | null;
   selfie: string | null;
 }
 
@@ -41,10 +41,18 @@ export default function OnboardingPage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
-
+  function toBase64(file: File) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      return reader.result;
+    };
+    return reader.result;
+ }
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, documentoFoto: e.target.files[0] })
+      const fotobase64 = toBase64(e.target.files[0]);
+      setFormData({ ...formData, documentoFoto: fotobase64 as string })
     }
   }
 
