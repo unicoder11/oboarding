@@ -186,7 +186,7 @@ export default function OnboardingPage() {
         body: formDataToSend,
       })
   
-      if (response) {
+      if (response.ok) {
         const data = await response.json()
         setSubmitStatus('success')
         console.log('Dados enviados com sucesso:', data)
