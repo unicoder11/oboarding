@@ -22,6 +22,20 @@ export async function save(formDataToSend: FormData) {
   return save
 }
 
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Método não permitido' });
+  }
+
+  try {
+    const { nome, cpf, documentoFoto, selfie } = req.body;
+  } catch (error) {
+    console.error('Erro ao salvar dados:', error);
+    return res.status(500).json({ error: 'Erro interno do servidor ao salvar dados.' });
+  } finally {
+    await prisma.$disconnect();
+  }
+} 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
