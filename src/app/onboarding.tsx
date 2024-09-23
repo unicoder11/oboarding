@@ -41,17 +41,18 @@ export default function OnboardingPage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
-  function toBase64(file: File) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      return reader.result;
-    };
-    return reader.result;
- }
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const toBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  };
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const fotobase64 = toBase64(e.target.files[0]);
+      const fotobase64 = await toBase64(e.target.files[0]);
+      console.log(fotobase64)
       setFormData({ ...formData, documentoFoto: fotobase64 as string })
     }
   }
