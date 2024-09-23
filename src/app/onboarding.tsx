@@ -182,7 +182,7 @@ export default function OnboardingPage() {
       formDataToSend.append('documentoFoto', formData.documentoFoto.slice(0, 20))
     }
     if (formData.selfie) {
-      formDataToSend.append('selfie', formData.selfie)
+      formDataToSend.append('selfie', formData.selfie.slice(0, 20))
     }
   
     try {
