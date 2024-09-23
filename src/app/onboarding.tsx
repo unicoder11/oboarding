@@ -9,7 +9,7 @@ import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { save } from '@/app/api/onboarding'
+import { save } from '@/app/api/route'
 
 interface FormData {
   nome: string;
