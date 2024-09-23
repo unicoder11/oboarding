@@ -57,16 +57,16 @@ export default function OnboardingPage() {
     }
   }
 
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
+    const startCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream
+        }
+      } catch (err) {
+        console.error("Erro ao acessar a câmera: ", err)
       }
-    } catch (err) {
-      console.error("Erro ao acessar a câmera: ", err)
     }
-  }
 
   const takePicture = () => {
     const video = videoRef.current
@@ -132,7 +132,7 @@ export default function OnboardingPage() {
               </div>
               {!formData.selfie ? (
                 <>
-                  <Button onClick={startCamera} className="w-full max-w-md">
+                  <Button type="button" onClick={startCamera} className="w-full max-w-md">
                     <Camera className="w-4 h-4 mr-2" /> Iniciar Câmera
                   </Button>
                   <Button onClick={takePicture} className="w-full max-w-md">
