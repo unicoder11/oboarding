@@ -9,12 +9,12 @@ import { Steps } from "@/components/ui/steps"
 import { Camera, Upload } from 'lucide-react'
 import LogoSvg from '@/assets/logo_blox.svg'
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
-import { PrismaClient } from '@prisma/client';
+import axios from 'axios'
 
 interface FormData {
   nome: string;
   cpf: string;
-  documentoFoto: string | null;
+  documentoFoto: File | null;
   selfie: string | null;
 }
 
@@ -44,7 +44,7 @@ export default function OnboardingPage() {
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, documentoFoto: e.target.files[0].name })
+      setFormData({ ...formData, documentoFoto: e.target.files[0] })
     }
   }
 
@@ -109,7 +109,7 @@ export default function OnboardingPage() {
                 <Input id="documento" name="documento" type="file" className="hidden" onChange={handleFileUpload} />
               </label>
             </div>
-            {formData.documentoFoto && <p className="text-sm text-green-600">Arquivo selecionado: {formData.documentoFoto}</p>}
+            {formData.documentoFoto && <p className="text-sm text-green-600">Arquivo selecionado: {formData.documentoFoto.name}</p>}
           </div>
         )
       case 2:
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
             <h3 className="text-lg font-semibold">Revise seus dados</h3>
             <p><strong>Nome:</strong> {formData.nome}</p>
             <p><strong>CPF:</strong> {formData.cpf}</p>
-            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto : 'Não enviado'}</p>
+            <p><strong>Documento:</strong> {formData.documentoFoto ? formData.documentoFoto.name : 'Não enviado'}</p>
             {formData.selfie && (
               <div>
                 <p><strong>Selfie:</strong></p>
@@ -177,24 +177,22 @@ export default function OnboardingPage() {
     }
   
     try {
-      const prisma = new PrismaClient()
-      const response = await prisma.onboarding.create({
-        data: {
-          nome: formData.nome,
-          cpf: formData.cpf,
-          documentoFoto: formData.documentoFoto || "",
-          selfie: formData.selfie || "",
-        }
-      })
+
+      const resp =  axios.post('/api/onboarding', formDataToSend)
+      console.log(resp)
+      
+      
       // const response = await fetch('/api/onboarding', {
       //   method: 'POST',
       //   body: formDataToSend,
       // })
   
-      if (response) {
+      if (resp) {
+        const data = await (await resp).data
         setSubmitStatus('success')
-        console.log('Dados enviados com sucesso:')
+        console.log('Dados enviados com sucesso:', data)
       } else {
+        
         setSubmitStatus('error')
         console.error('Falha ao enviar dados:')
       }
