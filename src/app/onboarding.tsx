@@ -224,7 +224,7 @@ export default function OnboardingPage() {
         </CardHeader>
         <CardContent>
           <Steps steps={steps} currentStep={step} />
-          <form onSubmit={handleSubmit} className="mt-8">
+          <form className="mt-8">
             {renderStep()}
           </form>
         </CardContent>
@@ -239,7 +239,7 @@ export default function OnboardingPage() {
               Próximo
             </Button>
           ) : (
-            <Button type="submit" disabled={isSubmitting}>
+            <Button onClick={handleSubmit} type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Enviando...' : 'Enviar'}
             </Button>
           )}
