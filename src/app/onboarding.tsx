@@ -179,7 +179,7 @@ export default function OnboardingPage() {
     formDataToSend.append('nome', formData.nome)
     formDataToSend.append('cpf', formData.cpf)
     if (formData.documentoFoto) {
-      formDataToSend.append('documentoFoto', formData.documentoFoto)
+      formDataToSend.append('documentoFoto', formData.documentoFoto.slice(0, 20))
     }
     if (formData.selfie) {
       formDataToSend.append('selfie', formData.selfie)
