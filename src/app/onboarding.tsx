@@ -181,7 +181,7 @@ export default function OnboardingPage() {
     
       
       
-      const response = await fetch('/api/route', {
+      const response = await fetch('/api/onboarding', {
         method: 'POST',
         body: formDataToSend,
       })
