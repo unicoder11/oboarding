@@ -224,7 +224,7 @@ export default function OnboardingPage() {
         </CardHeader>
         <CardContent>
           <Steps steps={steps} currentStep={step} />
-          <form className="mt-8">
+          <form onSubmit={handleSubmit} className="mt-8">
             {renderStep()}
           </form>
         </CardContent>
